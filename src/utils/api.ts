@@ -4,8 +4,6 @@ import { DataType } from '../components/types';
 
 const API_URL = '/api/v40';
 const fetchData = async (): Promise<DataType[]> => {
-  // Your fetch logic here
-
   const xmlPayload = `<?xml version='1.0' encoding='UTF-8'?>
   <call method="exportConfigurableModelData" callerName="me">
     <credentials login="integrationid@accenturewfp5.com" password="temp@integration123" instanceCode="ACCENTURE_WFP5"/>
@@ -79,8 +77,6 @@ const fetchData = async (): Promise<DataType[]> => {
     const xmlDoc = parser.parseFromString(response.data, 'application/xml');
     const jsonResult = xmlToJson(xmlDoc); // Convert XML to JSON (you need to implement this function)
     console.log('jsonResult', jsonResult);
-    // Ensure the result is an array
-    // Extract the #cdata-section text
     const cdataText = extractCdataText(jsonResult);
     console.log('cdataText', cdataText);
 
