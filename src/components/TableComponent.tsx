@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { Table } from 'react-bootstrap';
-import fetchData from '../utils/api';
-import { DataType } from './types';
+import { fetchData1 } from '../utils/api';
+import { DataType1 } from './types';
 
 const TableComponent: React.FC = () => {
-  const [data, setData] = useState<DataType[]>([]);
+  const [data, setData] = useState<DataType1[]>([]);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
     const getData = async () => {
       try {
-        const result: DataType[] = await fetchData();
+        const result: DataType1[] = await fetchData1();
         console.log('result',result)
         // Ensure the result is an array
         if (Array.isArray(result)) {
@@ -86,7 +86,7 @@ const TableComponent: React.FC = () => {
         </tr>
       </thead>
       <tbody>
-        {data.map((item, index) => (
+        {data.slice(0,10).map((item, index) => (
           <tr key={index}>
             <td>{item['People Key']}</td>
             <td>{item['Enterprise ID Name']}</td>

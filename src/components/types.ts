@@ -1,4 +1,4 @@
-export interface DataType {
+export interface DataType1 {
   'People Key': string;
   'Enterprise ID Name': string;
   'EID Code': string;
@@ -44,4 +44,77 @@ export interface DataType {
   'Managed Chargeable FTE% Actuals': string;
   'Managed Chargeability Target': string;
   'Managed Chargeability Actuals': string;
+}
+
+// export interface DataType2 {
+//   'People Key': string;
+//   'Enterprise ID': string;
+//   'EID Code': string;
+//   'Conversation and Target Status': string;
+//   'Target Type': string;
+//   '% Achievement vs Individual Sales Target': string;
+//   '% Achievement vs Craft Sales Target': string;
+//   'Actual BD': string;
+//   'Actual M and O': string;
+//   'Actual MD and I': string;
+//   'Actual PD and R': string;
+//   'Actuals CHG': string;
+//   'Actuals Individual Sales': string;
+//   'BD': string;
+//   'BD Actual Variance To Target': string;
+//   'CHG': string;
+//   'CHG Actual': string;
+//   'CHG Actual Variance To Target': string;
+//   'CHG Entity Target': string;
+  
+//   'Individual Won CCI % Target vs Actual Variance': string;
+//   'Individual Operations Sales Actual': string;
+//   'Individual Consulting Sales Actuals': string;
+//   'Individual Sales': string;
+//   'Individual Sales Target Min': string;
+//   'Individual Sales Target Max': string;
+//   'Individual Sales Target Recommendation': string;
+//   'Individual Strategy Sales Actuals': string;
+//   'Individual Technology Sales Actual': string;
+//   'Individual Won CCI % Actual': string;
+//   'Individual Won CCI % Target': string;
+//   'M and O': string;
+//   'M and O Actual Variance To Target': string;
+//   'MD and I': string;
+//   'MD and I Actual Variance To Target': string;
+//   'PD and R': string;
+//   'PD and R Actual Variance To Target': string;
+//   'SAB Target Recommendation': string;
+//   'SAB Actuals': string;
+//   'Stage 2B Actuals $': string;
+//   'Stage 2B Target $': string;
+//   'Stage 2B Target Min $': string;
+//   'Craft Sales Target $': string;
+//   'Craft Sales Target % of Ind. Sales Target': string;
+//   'Craft Sales Focus': string;
+//   'Craft Sales Guideline $': string;
+//   'Craft Sales Guideline %': string;
+//   'Supervisory Org Level 1': string;
+//   'YTD Individual Sales Actuals As Of': string;
+//   'YTD Productivity Actuals As Of': string;
+//   'Individual SI Sales Actuals': string;
+//   'FY Flag': string;
+//   'Craft Sales Actuals': string;
+//   'Metric Model Type': string;
+//   'Indiv Metric Start Date': string;
+//   'Indiv Metric End Date': string;
+// }
+
+export interface DataType2 {
+  'Enterprise ID Code': string;
+  'Enterprise ID Name': string;
+  'CHG Guideline by Job': string;
+  'CHG Entity Target': string;
+  'CHG': string;
+  'MD&I': string;
+  'BD': string;
+  'M&O': string;
+  'PD&R': string;
+  'CHG Actual': string;
+  'CHG Target': string;
 }

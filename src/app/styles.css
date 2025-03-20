@@ -1,0 +1,138 @@
+/* styles.css */
+.table-header-small th {
+  height: 1px; /* Adjust the height as needed */
+  padding: 1px; /* Adjust the padding as needed */
+  font-size: 0.875rem; /* Adjust the font size as needed */
+}
+
+.styled-table {
+    border-collapse: collapse;
+    overflow-x: 'auto';
+    margin: 5px 0;
+    font-size: 0.9em;
+    font-family: sans-serif;
+    width:100%;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+.styled-table thead tr {
+    background-color:#98e4d9;
+    color: #ffffff;
+    text-align: left;
+}
+
+.styled-table th {
+    padding: 10px 5px;
+    background-color: #98e4d9;
+    text-align: center;
+}
+.styled-table td {
+    padding: 10px 5px;
+    text-align: center;
+}
+
+.styled-table tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+.styled-table tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+
+.styled-table tbody tr:last-of-type {
+    border-bottom: 2px solid 	#98e4d9;
+}
+
+.styled-table tbody tr.active-row {
+    font-weight: bold;
+    color: 	#98e4d9;
+}
+
+.table-column-small {
+    width: 5px; /* Adjust the width as needed */
+  }
+  
+  .table-column-input {
+    width: 10%; /* Adjust the width as needed */
+    text-align: center;
+  }
+
+.table-column-chg {
+    width: 2px !important; /* Adjust the width as needed */
+}
+
+.accordion-summary {
+    width: 100%;
+    text-align: center;
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    background-color: #98e4d9; /* Sage green color */
+    display: inline-block;
+    padding: 5px; /* Add padding for better appearance */
+    box-sizing: border-box; /* Include padding in the element's total width and height */
+}
+
+.accordion-summary-center {
+    padding: 0; /* Remove padding */
+    margin: 0; /* Remove margin */
+    min-height: 0; /* Adjust minimum height if needed */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color:#98e4d9; /* MediumSeaGreen color */
+    color: #ffffff; /* Text color */
+    width: 100%; /* Ensure it covers the entire header area */
+ /* Add padding for better appearance */
+    box-sizing: border-box; /* Include padding in the element's total width and height */
+  }
+
+  .custom-tab { /* Background color for the tabs */
+    color: #ffffff; /* Text color for the tabs */
+  }
+  
+  .custom-tab .nav-link {
+    background-color: 	#7bbcb6		; /* Background color for the tabs */
+    color: #ffffff; /* Text color for the tabs */
+  }
+  
+  .custom-tab .nav-link.active {
+    background-color: #387f75; /* Background color for the active tab */
+    color: #ffffff; /* Text color for the active tab */
+  }
+
+  .enterprise{
+    margin-left: "50px" !important;
+    padding-left: '50px';
+    color: #387f75;
+    padding-bottom: '1px';
+    margin-bottom: '1px';
+  }
+
+  .fy25-targets{
+    margin-top: '-10px';
+  }
+
+  .spinner {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+    width: 50px;
+    height: 50px;
+    border: 5px solid rgba(0, 0, 255, 0.3); /* Light blue border */
+    border-top: 5px solid rgb(94, 94, 200); /* Blue border on top */
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  .table-column-chg {
+    max-width: 1px !important;
+  }
+  
