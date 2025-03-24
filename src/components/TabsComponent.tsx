@@ -2,6 +2,7 @@ import React from 'react';
 import { Tabs, Tab } from 'react-bootstrap';
 import TableComponent from './TableComponent';
 import TableComponent2 from './TableComponent2';
+import IndividualSales from './IndividualSales';
 
 const TabsComponent: React.FC = () => {
   return (
@@ -12,6 +13,9 @@ const TabsComponent: React.FC = () => {
       </Tab>
       <Tab eventKey="FY25 Targets" title="FY25 Targets">
       <TableComponent2 />
+      </Tab>
+      <Tab eventKey="Individual Sales" title="Individual Sales">
+      <IndividualSales />
       </Tab>
     </Tabs>
     </div>

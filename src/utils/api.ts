@@ -1,8 +1,7 @@
-import axios from 'axios';
-import Papa from 'papaparse';
+
 import { DataType1, DataType2 } from '../components/types';
 
-const API_URL = '/api/v40';
+const API_URL = 'http://localhost:3000/api/v40';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const debounce = (func: (...args: any[]) => void, delay: number) => {
@@ -118,42 +117,23 @@ const fetchData1 = async (): Promise<DataType1[]> => {
   </call>`;
 
   try {
-    const response = await axios.post(API_URL, xmlPayload, {
+    const response = await fetch(API_URL, {
+      method: 'POST',
       headers: {
         'Content-Type': 'application/xml',
       },
+      body: xmlPayload,
     });
-    console.log('response', response);
-    // Assuming the response is in XML format, parse it to JSON
-    const parser = new DOMParser();
-    const xmlDoc = parser.parseFromString(response.data, 'application/xml');
-    const jsonResult = xmlToJson(xmlDoc); // Convert XML to JSON (you need to implement this function)
-    console.log('jsonResult', jsonResult);
-    const cdataText = extractCdataText1(jsonResult);
-    console.log('cdataText', cdataText);
 
-    const parsedData = Papa.parse<DataType1>(cdataText.join('\n'), {
-      header: true,
-      skipEmptyLines: true,
-    }).data;
-
-    // Ensure the result is an array
-    return Array.isArray(parsedData) ? parsedData : [];
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  } catch (error: Error | any) {
-    if (error.response) {
-      // Server responded with a status other than 200 range
-      console.log('Error response:', error.response.data);
-      console.log('Error status:', error.response.status);
-      console.log('Error headers:', error.response.headers);
-    } else if (error.request) {
-      // Request was made but no response received
-      console.log('Error request:', error.request);
-    } else {
-      // Something else happened while setting up the request
-      console.log('Error message:', error.message);
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
     }
-    console.log('Error config:', error.config);
+
+    const responseData = await response.json();
+    console.log('fetchData1 response:', responseData);
+    return responseData;
+  } catch (error) {
+    console.error('Error fetching data:', error);
     throw error;
   }
 };
@@ -175,7 +155,7 @@ const fetchData2 = async (): Promise<DataType2[]> => {
                    useNumericIDs="false"
                    displayNameEnabled="true"
                    includeNames="true"
-                   includeCodes="true"
+                    includeCodes="true"
                    includeDisplayName="true"
                    useAccountPrecision="true"/>
     <filters>
@@ -199,145 +179,28 @@ const fetchData2 = async (): Promise<DataType2[]> => {
             </model>
         </columns>
     </filters>
-</call>
-`;
-
+</call>`;
   try {
-    const response = await axios.post(API_URL, xmlPayload, {
+    const response = await fetch(API_URL, {
+      method: 'POST',
       headers: {
         'Content-Type': 'application/xml',
       },
+      body: xmlPayload,
     });
-    console.log('response', response);
-    // Assuming the response is in XML format, parse it to JSON
-    const parser = new DOMParser();
-    const xmlDoc = parser.parseFromString(response.data, 'application/xml');
-    const jsonResult = xmlToJson(xmlDoc); // Convert XML to JSON (you need to implement this function)
-    console.log('jsonResult', jsonResult);
 
-    // Extract the #cdata-section text
-    const cdataText = extractCdataText2(jsonResult);
-    console.log('cdataText', cdataText);
-
-    // Parse the CSV data
-    const parsedData = Papa.parse<DataType2>(cdataText.join('\n'), {
-      header: true,
-      skipEmptyLines: true,
-    }).data;
-
-    // Ensure the result is an array
-    return Array.isArray(parsedData) ? parsedData : [];
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  } catch (error: Error | any) {
-    if (error.response) {
-      // Server responded with a status other than 200 range
-      console.log('Error response:', error.response.data);
-      console.log('Error status:', error.response.status);
-      console.log('Error headers:', error.response.headers);
-    } else if (error.request) {
-      // Request was made but no response received
-      console.log('Error request:', error.request);
-    } else {
-      // Something else happened while setting up the request
-      console.log('Error message:', error.message);
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
     }
-    console.log('Error config:', error.config);
+
+    const responseData = await response.json();
+    return responseData;
+  } catch (error) {
+    console.error('Error fetching data:', error);
     throw error;
   }
-};
-
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function xmlToJson(xml: Document): any {
-    // Create the return object
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const obj: any = {};
-  
-    // Handle nodes with children
-    if (xml.hasChildNodes()) {
-      for (let i = 0; i < xml.childNodes.length; i++) {
-        const item = xml.childNodes.item(i);
-        const nodeName = item.nodeName;
-  
-        // Skip #text nodes and XML declaration
-        if (nodeName === "#text" || nodeName === "#declaration") {
-          continue;
-        }
-  
-        // Handle attributes
-        const attributes = (item as Element).attributes;
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const childObj: any = {};
-        
-        if (attributes && attributes.length > 0) {
-          for (let j = 0; j < attributes.length; j++) {
-            const attr = attributes.item(j);
-            if (attr) {
-              childObj[attr.nodeName] = attr.nodeValue;
-            }
-          }
-        }
-  
-        // Handle child nodes recursively
-        if (item.hasChildNodes()) {
-          const children = xmlToJson(item as unknown as Document);
-          if (Object.keys(children).length) {
-            childObj.children = children;
-          }
-        }
-  
-        // Handle text content
-        if (item.textContent && item.textContent.trim()) {
-          childObj.text = item.textContent.trim();
-        }
-  
-        // Handle multiple elements with same name by converting to array
-        if (obj[nodeName]) {
-          if (!Array.isArray(obj[nodeName])) {
-            obj[nodeName] = [obj[nodeName]];
-          }
-          obj[nodeName].push(childObj);
-        } else {
-          obj[nodeName] = childObj;
-        }
-      }
-    }
-  
-    return obj;
-  }
-
-  // Function to extract #cdata-section text
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function extractCdataText1(jsonResult: any): DataType1[] {
-  const cdataText: DataType1[] = [];
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const traverse = (obj: any) => {
-    for (const key in obj) {
-      if (key === '#cdata-section') {
-        cdataText.push(obj[key].text);
-      } else if (typeof obj[key] === 'object') {
-        traverse(obj[key]);
-      }
-    }
-  };
-  traverse(jsonResult);
-  return cdataText;
 }
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function extractCdataText2(jsonResult: any): DataType2[] {
-  const cdataText: DataType2[] = [];
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const traverse = (obj: any) => {
-    for (const key in obj) {
-      if (key === '#cdata-section') {
-        cdataText.push(obj[key].text);
-      } else if (typeof obj[key] === 'object') {
-        traverse(obj[key]);
-      }
-    }
-  };
-  traverse(jsonResult);
-  return cdataText;
-}  
+
+ 
 
 export { fetchData1, fetchData2 };
