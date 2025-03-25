@@ -150,9 +150,9 @@ const TableComponent2: React.FC = () => {
                       </td>
                       <td>{item['MD&I']}</td>
                       <td>{item['BD']}</td>
-                    
-                      <td>{item['M&O']}</td>
                       <td>{item['PD&R']}</td>
+                      <td>{item['M&O']}</td>
+                      
                     </tr>
                   ))}
                 </tbody>
@@ -169,39 +169,39 @@ const TableComponent2: React.FC = () => {
 </FormGroup>
       {showFY24 && (
               <div style={{ overflowX: 'auto' }}>
-                <Table className="styled-table" striped bordered hover size="sm">
+                <Table className="styled-fy24-table" striped bordered hover size="sm">
                   <thead className="table-header-small">
                     <tr>
-                      <th className="table-column-small">Type</th>
-                      <th className="table-column-small">BD</th>
-                      <th className="table-column-small">CHG</th>
-                      <th className="table-column-small">CHG Entity Target</th>
-                      <th className="table-column-small">CHG Guideline by Job</th>
-                      <th className="table-column-small">M and O</th>
-                      <th className="table-column-small">MD and I</th>
-                      <th className="table-column-small">PD and R</th>
-                    </tr>
+                      <th className="table-column-small"></th>
+                    <th className="table-column-small">CHG Guideline by Job</th>
+                  <th className="table-column-small">CHG Entity Target</th>
+                  <th className="table-column-chg">CHG</th>
+                  <th className="table-column-small">MD and I</th>
+                  <th  className="table-column-small">BD</th>          
+                  <th  className="table-column-small">PD and R</th>           
+                  <th className="table-column-small">M and O</th>
+                  </tr>
                   </thead> 
                   <tbody>
                     <tr>
                       <td>FY24 Actuals</td>
-                      <td>{data[0]?.['BD']}</td>
-                      <td>{data[0]?.['CHG Actual']}</td>
-                      <td>{data[0]?.['CHG Entity Target']}</td>
                       <td>{data[0]?.['CHG Guideline by Job']}</td>
-                      <td>{data[0]?.['M&O']}</td>
+                      <td>{data[0]?.['CHG Entity Target']}</td>
+                      <td>{data[0]?.['CHG Actual']}</td>
                       <td>{data[0]?.['MD&I']}</td>
+                      <td>{data[0]?.['BD']}</td>
                       <td>{data[0]?.['PD&R']}</td>
+                      <td>{data[0]?.['M&O']}</td>
                     </tr>
                     <tr>
                       <td>FY24 Targets</td>
-                      <td>{data[1]?.['BD']}</td>
-                      <td>{data[1]?.['CHG Target']}</td>
-                      <td>{data[1]?.['CHG Entity Target']}</td>
                       <td>{data[1]?.['CHG Guideline by Job']}</td>
-                      <td>{data[1]?.['M&O']}</td>
+                      <td>{data[1]?.['CHG Entity Target']}</td>
+                      <td>{data[1]?.['CHG Target']}</td>
                       <td>{data[1]?.['MD&I']}</td>
+                      <td>{data[1]?.['BD']}</td>
                       <td>{data[1]?.['PD&R']}</td>
+                      <td>{data[1]?.['M&O']}</td>
                     </tr>
                   </tbody>
                 </Table>

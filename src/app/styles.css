@@ -139,8 +139,6 @@
 
   /* styles.css */
 .table-container {
-    width: 70%; /* 75% of the Box width */
-    margin-left: auto;
     margin-right: 10px;
     display: flex;
     justify-content: flex-end;
@@ -153,5 +151,97 @@
     margin-top: 20px; /* Add some space between the table and the checkboxes */
  margin-left: 10px;
  margin-right: 10px;
+}
+
+.shaded-th {
+  background-color: #f2f2f2; /* Light gray background */
+  color: #333; /* Dark text color */ /* Padding for better spacing */
+  text-align: left; /* Align text to the left */
+  width: 38%;
+}
+
+.shaded-green-th{
+  background-color: chartreuse;
+  color: chartreuse;
+}
+
+.managed-sales-table-container {
+  width: 100%; /* 75% of the Box width */
+  margin-left: auto;
+  margin-right: 10px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.spaced-row {
+  height: 20px; /* Adjust the height as needed */
+}
+
+.sales-styled-table th,
+.sales-styled-table td {
+  padding: 2px; /* Decrease padding for smaller height */
+  height: 5px; /* Set a fixed height for table cells */
+}
+
+.sales-metrics{
+  width: 78%;
+margin-left: 260px;
+margin-top: -150px;
+}
+
+.sales-metrics-dropdown{
+  width: 50%;
+  margin-right: 500%;
+}
+
+.sales-label{
+  margin-left: 15px;
+}
+
+.sales-container {
+  margin-bottom: 10px;
+}
+
+.styled-fy24-table {
+  border-collapse: collapse;
+  overflow-x: 'auto';
+  margin: 5px 0;
+  font-size: 0.9em;
+  font-family: sans-serif;
+  width:100%;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+.styled-fy24-table thead tr {
+  background-color:#98e4d9;
+  color: #ffffff;
+  text-align: left;
+}
+
+.styled-fy24-table th {
+  padding: 10px 5px;
+  background-color: #98e4d9;
+  text-align: center;
+}
+.styled-fy24-table td {
+  padding: 10px 5px;
+  text-align: center;
+}
+
+.styled-fy24-table tbody tr {
+  border-bottom: 1px solid #dddddd;
+}
+
+.styled-fy24-table tbody tr:nth-of-type(even) {
+  background-color: #f3f3f3;
+}
+
+.styled-fy24-table tbody tr:last-of-type {
+  border-bottom: 2px solid 	#98e4d9;
+}
+
+.styled-fy24-table tbody tr.active-row {
+  font-weight: bold;
+  color: 	#98e4d9;
 }
   
