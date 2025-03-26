@@ -354,7 +354,7 @@ margin-bottom: 30px;
 }
 
 .bg-red {
-  background-color: #f8d7da !important; /* Light red */
+  background-color: red !important; /* Light red */
 }
 
 .bg-purple {
