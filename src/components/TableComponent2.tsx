@@ -135,9 +135,9 @@ const TableComponent2: React.FC = () => {
                 <tbody>
                   {data.slice(0, 1).map((item, index) => (
                     <tr key={index}>
-                       <td className="table-column-input">{item['CHG Guideline by Job']}</td>
-                       <td>{item['CHG Entity Target']}</td>
-                       <td>
+                       <td className="table-column-input bg-blue">{item['CHG Guideline by Job']}</td>
+                       <td className="bg-green">{item['CHG Entity Target']}</td>
+                       <td className="bg-pink">
                       <CssTextField
                         id="outlined-size-small"
                         size="small"
@@ -148,10 +148,10 @@ const TableComponent2: React.FC = () => {
                         sx={{ width: '50px', height: "25px", '& .MuiInputBase-input': { textAlign: 'center', height: "10px", paddingTop: '8px'} }}
                       />
                       </td>
-                      <td>{item['MD&I']}</td>
-                      <td>{item['BD']}</td>
-                      <td>{item['PD&R']}</td>
-                      <td>{item['M&O']}</td>
+                      <td className="bg-yellow">{item['MD&I']}</td>
+                      <td className="bg-red">{item['BD']}</td>
+                      <td className="bg-purple">{item['PD&R']}</td>
+                      <td className="bg-orange">{item['M&O']}</td>
                       
                     </tr>
                   ))}
