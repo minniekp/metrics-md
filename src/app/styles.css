@@ -142,6 +142,7 @@
     margin-right: 10px;
     display: flex;
     justify-content: flex-end;
+    width: 100%;
   }
 
   .checkbox-container {
@@ -157,7 +158,16 @@
   background-color: #f2f2f2; /* Light gray background */
   color: #333; /* Dark text color */ /* Padding for better spacing */
   text-align: left; /* Align text to the left */
-  width: 38%;
+  width: 30%;
+  font-size: 12.5px;
+}
+
+.shaded-size-th {
+  font-size: 12.5px;
+}
+
+.spaced-td{
+  text-align: right !important;
 }
 
 .shaded-green-th{
@@ -166,27 +176,50 @@
 }
 
 .managed-sales-table-container {
-  width: 100%; /* 75% of the Box width */
-  margin-left: auto;
+  width: auto; /* 75% of the Box width */
+  margin-left: -20px;
   margin-right: 10px;
   display: flex;
   justify-content: flex-end;
+  height: 350px;
+}
+
+.manaed-sales-card {
+  display: flex;
+  flex-direction: column; /* Stack cards vertically */
+  gap: 50px; 
+
 }
 
 .spaced-row {
-  height: 20px; /* Adjust the height as needed */
+  height: 5px; /* Adjust the height as needed */
+}
+
+.spaced-column {
+width: 1px !important;
 }
 
 .sales-styled-table th,
 .sales-styled-table td {
-  padding: 2px; /* Decrease padding for smaller height */
-  height: 5px; /* Set a fixed height for table cells */
+  padding: 5px; /* Decrease padding for smaller height */
+  height: 5px !important; /* Set a fixed height for table cells */
+  line-height: 10px !important;
+  text-align: left;
+vertical-align: middle;
 }
+
+.sales-styled-table td {
+  width: 200px; 
+  text-align: center; 
+  height: 10px;
+}
+
+
 
 .sales-metrics{
   width: 78%;
-margin-left: 260px;
-margin-top: -150px;
+margin-left: 160px;
+margin-top: -70px;
 }
 
 .sales-metrics-dropdown{
@@ -196,11 +229,13 @@ margin-top: -150px;
 
 .sales-label{
   margin-left: 15px;
+  font-size: 12.5px;
 }
 
 .sales-container {
   margin-bottom: 10px;
 }
+
 
 .styled-fy24-table {
   border-collapse: collapse;
@@ -243,5 +278,68 @@ margin-top: -150px;
 .styled-fy24-table tbody tr.active-row {
   font-weight: bold;
   color: 	#98e4d9;
+}
+
+.btn {
+  padding: 8px 16px;
+  font-size: 11px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  color: white;
+  border: none;
+}
+
+.btn:hover {
+  opacity: 0.9;
+}
+
+.top-right-buttons {
+  position: absolute;
+  top: 20px;
+  right: 5px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-right: 0px;
+  width: 110px;
+}
+
+.card-table-container {
+  display: flex;
+  align-items: flex-start; /* Align items at the top */
+  gap: 20px; /* Add space between the card and the table container */
+}
+
+.new-card {
+  flex-shrink: 0; /* Prevent the card from shrinking */
+  width: 40%; /* Set the width of the card */
+  margin-left: -270px;
+  position: relative;
+  margin-top: 20px;
+  height: 150px;
+}
+
+.new-ms-card {
+  flex-shrink: 0; /* Prevent the card from shrinking */
+  width: 230px; /* Set the width of the card */
+  position: relative;
+  margin-top: 0px;
+  height: 150px;
+  margin-left: -250px;
+margin-bottom: 30px;
+}
+
+.table-container {
+  display: flex;
+  flex-direction: column; /* Stack tables vertically */
+  flex-grow: 1; /* Allow the table container to take up the remaining space */
+}
+
+.table-container table {
+  margin-top: 20px; /* Add space between the tables */
 }
   
