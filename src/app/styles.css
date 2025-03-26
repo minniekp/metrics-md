@@ -354,7 +354,7 @@ margin-bottom: 30px;
 }
 
 .bg-red {
-  background-color: red !important; /* Light red */
+  background-color: lightcoral !important; /* Light red */
 }
 
 .bg-purple {
@@ -363,6 +363,12 @@ margin-bottom: 30px;
 
 .bg-orange {
   background-color: #ffe5b4 !important; /* Light orange */
+}
+
+.shaded-size-th,
+.sales-styled-table td {
+  text-align: center !important; /* Center-align text horizontally */
+  vertical-align: middle !important; /* Center-align content vertically */
 }
 
   

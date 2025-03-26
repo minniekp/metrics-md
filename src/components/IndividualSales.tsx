@@ -99,7 +99,7 @@ const IndividualSales: React.FC = () => {
     </CardContent>
     </Card>
     <div className="table-container">
-              <Table striped bordered hover size="sm">
+              <Table className="sales-styled-table" striped bordered hover size="sm">
           <thead>
             <tr>
               <th className="shaded-size-th">FFY Individual Sales Target Min</th>
@@ -109,13 +109,18 @@ const IndividualSales: React.FC = () => {
             </tr>
           </thead>
           <tbody>
-           <tr></tr>
+           <tr>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+            <td>4</td>
+           </tr>
           </tbody>
         </Table>
      
         
 
-        <Table striped bordered hover size="sm">
+        <Table className="sales-styled-table" striped bordered hover size="sm">
           <thead>
             <tr>
               <th className="shaded-size-th">Craft Target Guideline %</th>
@@ -125,7 +130,12 @@ const IndividualSales: React.FC = () => {
             </tr>
           </thead>
           <tbody>
-            {/* Add rows here */}
+           <tr>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+            <td>4</td>
+           </tr>
           </tbody>
         </Table>
        
