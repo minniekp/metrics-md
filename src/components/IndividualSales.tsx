@@ -63,13 +63,16 @@ const IndividualSales: React.FC = () => {
             <div className="enterprise-container">
           <Box sx={{ display: 'flex', alignItems: 'left', marginBottom: '20px' }}>
           <FormControl variant="outlined" sx={{ minWidth: 150}}>
-                <InputLabel id="enterprise-id-label">Enterprise ID Name</InputLabel>
+                <InputLabel  id="enterprise-id-label">Enterprise ID Name</InputLabel>
                 <Select
                   labelId="enterprise-id-label"
                   id="enterprise-id"
                   value={enterpriseId}
                   onChange={handleEnterpriseIdChange}
                   label="Enterprise ID Name"
+                  sx={{
+                    height: 50, // Set the height of the dropdown
+                  }}
                 >
                   <MenuItem value="">
                     <em>None</em>

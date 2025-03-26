@@ -26,6 +26,7 @@
     background-color: #98e4d9;
     text-align: center;
 }
+
 .styled-table td {
     padding: 10px 5px;
     text-align: center;
@@ -49,11 +50,11 @@
 }
 
 .table-column-small {
-    width: 5px; /* Adjust the width as needed */
+    width: 5px !important; /* Adjust the width as needed */
   }
   
   .table-column-input {
-    width: 10%; /* Adjust the width as needed */
+    width: 10% !important; /* Adjust the width as needed */
     text-align: center;
   }
 
@@ -358,7 +359,7 @@ margin-bottom: 30px;
 }
 
 .bg-purple {
-  background-color: #e2d4f8 !important; /* Light purple */
+  color: red !important; /* Light purple */
 }
 
 .bg-orange {
@@ -370,5 +371,6 @@ margin-bottom: 30px;
   text-align: center !important; /* Center-align text horizontally */
   vertical-align: middle !important; /* Center-align content vertically */
 }
+
 
   

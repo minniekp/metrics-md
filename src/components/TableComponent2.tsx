@@ -119,10 +119,12 @@ const TableComponent2: React.FC = () => {
             <span className='accordion-summary'> Productivity Targets</span>
           </AccordionSummary>
           <AccordionDetails>
-            <span className="mt-0 pt-0">FY 25 Targets</span>
+            {/* <span className="mt-0 pt-0">FY 25 Targets</span> */}
+            <div style={{ overflowX: 'auto' }}>
           <Table className="styled-table" striped bordered hover size="sm">
                 <thead className="table-header-small">
                   <tr>
+                  <th className="table-column-small"></th>
                   <th className="table-column-small">CHG Guideline by Job</th>
                   <th className="table-column-small">CHG Entity Target</th>
                   <th className="table-column-chg">CHG</th>
@@ -135,7 +137,8 @@ const TableComponent2: React.FC = () => {
                 <tbody>
                   {data.slice(0, 1).map((item, index) => (
                     <tr key={index}>
-                       <td className="table-column-input bg-blue">{item['CHG Guideline by Job']}</td>
+                      <td>FY25 Targets</td>
+                       <td className="table-column-small bg-blue">{item['CHG Guideline by Job']}</td>
                        <td className="bg-green">{item['CHG Entity Target']}</td>
                        <td className="bg-pink">
                       <CssTextField
@@ -151,12 +154,12 @@ const TableComponent2: React.FC = () => {
                       <td className="bg-yellow">{item['MD&I']}</td>
                       <td className="bg-red">{item['BD']}</td>
                       <td className="bg-purple">{item['PD&R']}</td>
-                      <td className="bg-orange">{item['M&O']}</td>
-                      
+                      <td className="bg-orange">{item['M&O']}</td>  
                     </tr>
                   ))}
                 </tbody>
               </Table>
+              </div>
           <div className="mt-2 pt-4">
 
 <FormGroup>
