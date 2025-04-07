@@ -17,6 +17,9 @@ import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import TextField from '@mui/material/TextField';
 import Typography  from '@mui/material/Typography';
+import { useState, useEffect } from 'react';
+import { DataType2, DataType1 } from './types';
+import { fetchData1, fetchData2 } from '../utils/api';
 
 
 const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
@@ -27,7 +30,61 @@ const IndividualSales: React.FC = () => {
     const [managedCheckedConfirmed, setManagedCheckedConfirmed] = React.useState(true);
     const [managedCheckedConversation, setManagedCheckedConversation] = React.useState(true);
     const [enterpriseId, setEnterpriseId] = React.useState('');
+    const [data, setData] = useState<DataType2[]>([]);
+    const [fullData, setFullData] = useState<DataType1[]>([]);
+    
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        // Check if data exists in sessionStorage
+        const cachedData = sessionStorage.getItem('fetchData2');
+        if (cachedData) {
+          // Parse and use the cached data
+          const parsedData: DataType2[] = JSON.parse(cachedData);
+          setData(parsedData);
+          console.log('Using cached data:', parsedData);
+        } else {
+          // Fetch data from the API if cache is empty
+          const result: DataType2[] = await fetchData2(true);
+          console.log('Fetched data from API:', result);
+  
+          // Ensure the result is an array
+          if (Array.isArray(result)) {
+            setData(result);
+  
+            // Cache the data in sessionStorage
+            sessionStorage.setItem('fetchData2', JSON.stringify(result));
+          } else {
+            throw new Error('Data is not an array');
+          }
+        }
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } catch (error: Error | any) {
+        console.error('Error fetching data:', error);
+      }
+    };
+  
+    getData();
+  }, []);
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const result: DataType1[] = await fetchData1();
+        // Ensure the result is an array
+        if (Array.isArray(result)) {
+          setFullData(result);
+        } else {
+          throw new Error('Data is not an array');
+        }
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } catch (error: Error | any) {
+        console.error('Error fetching data:', error);
+      } finally {
+      }
+    };
 
+    getData();
+  }, []);
     const handleConfirmedChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setCheckedConfirmed(event.target.checked);
       };
@@ -47,6 +104,10 @@ const IndividualSales: React.FC = () => {
       const handleEnterpriseIdChange = (event: SelectChangeEvent<string>) => {
         setEnterpriseId(event.target.value as string);
       }
+
+      const enterpriseIdList = data.length > 0 ? data.filter((item) => item['Conversation_Owner Name'] === "peter.halper") : [];
+      const enterpriseData = fullData.length > 0 ? fullData.filter((item) => item['Enterprise ID Name'] === enterpriseId) : [];
+      console.log('enterprisedata', enterpriseData);
     return (
         <>
         
@@ -74,12 +135,11 @@ const IndividualSales: React.FC = () => {
                     height: 50, // Set the height of the dropdown
                   }}
                 >
-                  <MenuItem value="">
-                    <em>None</em>
-                  </MenuItem>
-                  <MenuItem value="MD1">MD 1</MenuItem>
-                  <MenuItem value="MD2">MD 2</MenuItem>
-                  <MenuItem value="MD3">MD 3</MenuItem>
+                 {enterpriseIdList.map((option) => (
+                    <MenuItem key={option['Enterprise ID Code']} value={option['Enterprise ID Name']}>
+                      {option['Enterprise ID Name']}
+                    </MenuItem>
+                  ))}
                 </Select>
               </FormControl>
             </Box>
@@ -193,57 +253,57 @@ const IndividualSales: React.FC = () => {
     </Card>
     </div>
             <Table className="sales-styled-table" striped bordered hover size="sm">
-              <tbody>
+            <tbody>
                 <tr>
                   <th className="shaded-th">Sales Plan</th>
-                  <td className="spaced-td">Value 1</td>
+                  <td className="spaced-td">{enterpriseData[0] ? enterpriseData[0]['Sales Plan'] : 0}</td>
                   <th className="shaded-th">Del CCI $ Plan</th>
-                  <td className="spaced-td">Comment 1</td>
+                  <td className="spaced-td">{enterpriseData[0] ? enterpriseData[0]['Del CCI $ Plan'] : 0}</td>
                 </tr>
                 <tr>
                   <th className="shaded-th">Sales Plan/Target</th>
-                  <td className="spaced-td">Value 2</td>
+                  <td className="spaced-td">{enterpriseData[0] ? enterpriseData[0]['Sales Plan/Target'] : 0}</td>
                   <th className="shaded-th">Del CCI $ Plan/Target</th>
-                  <td className="spaced-td">Comment 2</td>
+                  <td className="spaced-td">{enterpriseData[0] ? enterpriseData[0]['Del CCI $ Plan/Target'] : 0}</td>
                 </tr>
                 <tr className="spaced-row"></tr>
                 <tr>
                   <th className="shaded-th">Revenue Plan</th>
-                  <td className="spaced-td">Value 3</td>
+                  <td className="spaced-td">{enterpriseData[0] ? enterpriseData[0]['Revenue Plan'] : 0}</td>
                   <th className="shaded-th">Del CCI % Plan</th>
-                  <td className="spaced-td">Comment 3</td>
+                  <td className="spaced-td">{enterpriseData[0] ? enterpriseData[0]['Del CCI % Plan'] : 0}</td>
                 </tr>
                 <tr>
                   <th className="shaded-th">Revenue Plan/Target</th>
-                  <td className="spaced-td">Value 4</td>
+                  <td className="spaced-td">{enterpriseData[0] ? enterpriseData[0]['Revenue Plan/Target'] : 0}</td>
                   <th className="shaded-th">Del CCI % Plan/Target</th>
-                  <td className="spaced-td">Comment 4</td>
+                  <td className="spaced-td">{enterpriseData[0] ? enterpriseData[0]['Del CCI % Plan/Target'] : 0}</td>
                 </tr>
                 <tr className="spaced-row"></tr>
                 <tr>
                   <th className="shaded-th">Sales Plan</th>
-                  <td className="spaced-td">Value 3</td>
+                  <td className="spaced-td">{enterpriseData[0] ? enterpriseData[0]['Sales Plan'] : 0}</td>
                   <th className="shaded-th">Del CCI $ Plan</th>
-                  <td className="spaced-td">Comment 3</td>
+                  <td className="spaced-td">{enterpriseData[0] ? enterpriseData[0]['Del CCI $ Plan'] : 0}</td>
                 </tr>
                 <tr>
                   <th className="shaded-th">Sales Plan/Target</th>
-                  <td className="spaced-td">Value 4</td>
+                  <td className="spaced-td">{enterpriseData[0] ? enterpriseData[0]['Sales Plan/Target'] : 0}</td>
                   <th className="shaded-th">Del CCI $ Plan/Target</th>
-                  <td className="spaced-td">Comment 4</td>
+                  <td className="spaced-td">{enterpriseData[0] ? enterpriseData[0]['Del CCI $ Plan/Target'] : 0}</td>
                 </tr>
                 <tr className="spaced-row"></tr>
                 <tr>
                   <th className="shaded-th">Revenue Plan</th>
-                  <td className="spaced-td">Value 3</td>
+                  <td className="spaced-td">{enterpriseData[0] ? enterpriseData[0]['Revenue Plan'] : 0}</td>
                   <th className="shaded-th">Del CCI % Plan</th>
-                  <td className="spaced-td">Comment 3</td>
+                  <td className="spaced-td">{enterpriseData[0] ? enterpriseData[0]['Del CCI % Plan'] : 0}</td>
                 </tr>
                 <tr>
                   <th className="shaded-th">Revenue Plan/Target</th>
-                  <td className="spaced-td">Value 4</td>
-                  <th className="shaded-th">CCI % Plan/Target</th>
-                  <td className="spaced-td">Comment 4</td>
+                  <td className="spaced-td">{enterpriseData[0] ? enterpriseData[0]['Revenue Plan/Target'] : 0}</td>
+                  <th className="shaded-th">Del CCI % Plan/Target</th>
+                  <td className="spaced-td">{enterpriseData[0] ? enterpriseData[0]['Del CCI % Plan/Target'] : 0}</td>
                 </tr>
               </tbody>
             </Table>

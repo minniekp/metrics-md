@@ -37,67 +37,99 @@ const TableComponent2: React.FC = () => {
   const [showFY24, setShowFY24] = useState(false);
   const [loading, setLoading] = useState(false);
   const label = { inputProps: { 'aria-label': 'Show FY24 Actuals and Targets' } };
+  useEffect(() => {
+    // Clear sessionStorage cache on page refresh
+    const clearCacheOnRefresh = () => {
+      sessionStorage.removeItem('fetchData2Cache');
+      console.log('Cache cleared on page refresh');
+    };
+  
+    // Attach the event listener
+    window.addEventListener('beforeunload', clearCacheOnRefresh);
+  
+    // Cleanup the event listener on component unmount
+    return () => {
+      window.removeEventListener('beforeunload', clearCacheOnRefresh);
+    };
+  }, []);
 
   useEffect(() => {
     const getData = async () => {
       try {
         setLoading(true);
-        const result: DataType2[] = await fetchData2();
-        console.log('result', result);
-        // Ensure the result is an array
-        if (Array.isArray(result)) {
-          setData(result);
+  
+        // Check if data exists in sessionStorage
+        const cachedData = sessionStorage.getItem('fetchData2Cache');
+        if (cachedData) {
+          // Parse and use the cached data
+          const parsedData: DataType2[] = JSON.parse(cachedData);
+          setData(parsedData);
+          console.log('Using cached data:', parsedData);
         } else {
-          throw new Error('Data is not an array');
-        }
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      } catch (error: Error | any) {
-        console.error('Error fetching data:', error);
-        setError(error);
-      } finally {
-        setLoading(false);
-      }
-    };
+          // Fetch data from the API
+          const result: DataType2[] = await fetchData2(false);
+          console.log('Fetched data from API:', result);
+  // Ensure the result is an array
+  if (Array.isArray(result)) {
+    setData(result);
 
-    getData();
-  }, []);
+    // Cache the data in sessionStorage
+    sessionStorage.setItem('fetchData2Cache', JSON.stringify(result));
+  } else {
+    throw new Error('Data is not an array');
+  }
+}
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+} catch (error: Error | any) {
+console.error('Error fetching data:', error);
+setError(error);
+} finally {
+setLoading(false);
+}
+};
+getData();
+}, []);
+
 
   const handleInputChange = (index: number, field: keyof DataType2, value: string) => {
     const newData = [...data];
     newData[index][field] = value;
     setData(newData);
+    console.log('Updated state:', newData);
     debouncedSaveData(newData[index]['Enterprise ID Code'], value);
   };
 
-  // const debouncedSaveData = useCallback(debounce(async(id, value) => await saveData(id, value), 1000), []);
-
-  const debouncedSaveData = useCallback(debounce(async (enterpriseId: string, chgValue: string) => {
-    setLoading(true);
-    try {
-      const updatedData = await saveData(enterpriseId, chgValue);
-      if (updatedData) {
-        setData(updatedData);
-      } else {
-        throw new Error('Updated data is undefined');
+  const debouncedSaveData = useCallback(
+    debounce(async (enterpriseId: string, chgValue: string) => {
+      setLoading(true);
+      try {
+        const updatedData = await saveData(enterpriseId, chgValue);
+        if (updatedData) {
+          setData(updatedData);
+        } else {
+          throw new Error('Updated data is undefined');
+        }
+        toast.success('Data saved successfully!', {
+          style: {
+            backgroundColor: '#98e4d9',
+            color: '#000000',
+          },
+        });
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any
+      } catch (error: Error | any) {
+        toast.error('Error saving data.', {
+          style: {
+            backgroundColor: '#98e4d9',
+            color: '#000000',
+          },
+        });
+      } finally {
+        setLoading(false);
       }
-      toast.success('Data saved successfully!', {
-        style: {
-          backgroundColor: '#98e4d9',
-          color: '#000000',
-        },
-      });
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any
-    } catch (error: Error | any)  {
-      toast.error('Error saving data.', {
-        style: {
-          backgroundColor: '#98e4d9',
-          color: '#000000',
-        },
-      });
-    } finally {
-      setLoading(false);
-    }
-  }, 1000), []);
+    }, 1000),
+    []
+  );
+
 
   if (error) {
     return <div>Error fetching data: {error.message}</div>;

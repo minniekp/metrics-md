@@ -42,10 +42,17 @@ try {
     throw new Error('Network response was not ok');
   }
 
+  console.log('Full response:', response);
+
   const responseData = await response.text();
-  console.log('Data saved successfully:', responseData);
-  // Call fetchData2 after saveData is complete
-  const updatedData = await fetchData2();
+  if (responseData) {
+    console.log('Data saved successfully from API:', responseData);
+  } else {
+    console.log('Data saved successfully, but response body is empty');
+  }
+
+  
+  const updatedData = await fetchData2(false);
   console.log('Updated data:', updatedData);
   return updatedData;
 } catch (error) {
@@ -54,7 +61,29 @@ try {
 };
 
 
-const fetchData1 = async (): Promise<DataType1[]> => {
+const fetchData1 = async (useCache = true): Promise<DataType1[]> => {
+  const cacheKey = 'fetchData1Cache'; // Key to store/retrieve data in sessionStorage
+  const cacheTimestampKey = 'fetchData1CacheTimestamp';
+  const cacheExpirationTime = 60 * 60 * 1000; 
+  if (useCache) {
+    // Check if data exists in sessionStorage
+    const cachedData = sessionStorage.getItem(cacheKey);
+    const cachedTimestamp = sessionStorage.getItem(cacheTimestampKey);
+    if (cachedData && cachedTimestamp) {
+      const now = Date.now();
+      const cacheAge = now - parseInt(cachedTimestamp, 10);
+
+      if (cacheAge < cacheExpirationTime) {
+        console.log('Using cached data');
+        return JSON.parse(cachedData); // Return cached data
+      } else {
+        console.log('Cache expired, fetching new data');
+        sessionStorage.removeItem(cacheKey); // Clear expired cache
+        sessionStorage.removeItem(cacheTimestampKey);
+      }
+    }
+  }
+
   const xmlPayload = `<?xml version='1.0' encoding='UTF-8'?>
   <call method="exportConfigurableModelData" callerName="me">
     <credentials login="integrationid@accenturewfp5.com" password="temp@integration123" instanceCode="ACCENTURE_WFP5"/>
@@ -140,27 +169,52 @@ const fetchData1 = async (): Promise<DataType1[]> => {
 
 
 
-const fetchData2 = async (): Promise<DataType2[]> => {
-  const xmlPayload = `<?xml version='1.0' encoding='UTF-8'?>
-<call method="exportConfigurableModelData"
-      callerName="me">
-    <credentials login="anusha.bramhalingiah@accenture_impl.com"
-                 password="Adaptive@123"
-                 instanceCode="ACCENTURE_WFP5"/>
-    <version name="POC For Custom UI"/>
-    <modeled-sheet name="New MD Roster"
-                   isGetAllRows="true"
-                   isGlobal="false"
-                   includeAllColumns="false"
-                   useNumericIDs="false"
-                   displayNameEnabled="true"
-                   includeNames="true"
-                    includeCodes="true"
-                   includeDisplayName="true"
-                   useAccountPrecision="true"/>
-    <filters>
-        <levels>
-            <level name="Accenture"
+const fetchData2 = async (useCache = true): Promise<DataType2[]> => {
+  const cacheKey = 'fetchData2'; // Key to store/retrieve data in sessionStorage
+  const cacheTimestampKey = 'fetchData2CacheTimestamp';
+  const cacheExpirationTime = 60 * 60 * 1000; 
+
+  try {
+    if (useCache) {
+      // Check if data exists in sessionStorage
+      const cachedData = sessionStorage.getItem(cacheKey);
+      const cachedTimestamp = sessionStorage.getItem(cacheTimestampKey);
+      if (cachedData && cachedTimestamp) {
+        const now = Date.now();
+        const cacheAge = now - parseInt(cachedTimestamp, 10);
+
+        if (cacheAge < cacheExpirationTime) {
+          console.log('Using cached data');
+          return JSON.parse(cachedData); // Return cached data
+        } else {
+          console.log('Cache expired, fetching new data');
+          sessionStorage.removeItem(cacheKey); // Clear expired cache
+          sessionStorage.removeItem(cacheTimestampKey);
+        }
+      }
+    }
+
+     // If no cached data, make the API call
+     const xmlPayload = `<?xml version='1.0' encoding='UTF-8'?>
+     <call method="exportConfigurableModelData"
+           callerName="me">
+         <credentials login="anusha.bramhalingiah@accenture_impl.com"
+                      password="Adaptive@123"
+                      instanceCode="ACCENTURE_WFP5"/>
+         <version name="POC For Custom UI"/>
+         <modeled-sheet name="New MD Roster"
+                        isGetAllRows="true"
+                        isGlobal="false"
+                        includeAllColumns="false"
+                        useNumericIDs="false"
+                        displayNameEnabled="true"
+                        includeNames="true"
+                        includeCodes="true"
+                        includeDisplayName="true"
+                        useAccountPrecision="true"/>
+         <filters>
+             <levels>
+             <level name="Accenture"
                    includeDescendants="true"
                    code="Accenture"/>
         </levels>
@@ -176,30 +230,36 @@ const fetchData2 = async (): Promise<DataType2[]> => {
                 <column>PD&amp;R</column>
                 <column>CHG Actual</column>
                 <column>CHG Target</column>
+                <column>Conversation_Owner</column>
             </model>
         </columns>
     </filters>
 </call>`;
-  try {
-    const response = await fetch(API_URL, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/xml',
-      },
-      body: xmlPayload,
-    });
+const response = await fetch(API_URL, {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/xml',
+  },
+  body: xmlPayload,
+});
 
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
-    }
-
-    const responseData = await response.json();
-    return responseData;
-  } catch (error) {
-    console.error('Error fetching data:', error);
-    throw error;
-  }
+if (!response.ok) {
+  throw new Error('Network response was not ok');
 }
+
+const responseData = await response.json();
+
+// Cache the response data in sessionStorage
+sessionStorage.setItem(cacheKey, JSON.stringify(responseData));
+sessionStorage.setItem(cacheTimestampKey, Date.now().toString());
+console.log('Fetched data from API and cached it');
+return responseData;
+} catch (error) {
+  console.error('Error fetching data:', error);
+  throw error;
+}
+};
+
 
  
 
