@@ -49,7 +49,7 @@ export interface DataType1 {
   'Individual Sales Target Max':string;
   'Individual Sales Target Recommendation': string;
   'Craft Sales Guideline($)':string;
-  'Craft Sales Target $'?: string;
+  'Craft Sales Target $' ?: string;
   'Craft Sales Target % of Ind. Sales Target': string;
   'Conversation and Target Status': string;
 }
