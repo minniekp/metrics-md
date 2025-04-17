@@ -4,7 +4,19 @@ import { DataType1, DataType2 } from '../components/types';
 const API_URL = 'http://localhost:3000/api/v40';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const debounce = (func: (...args: any[]) => void, delay: number) => {
+export const debounce1 = (func: (...args: any[]) => void, delay: number) => {
+  let timeoutId: NodeJS.Timeout;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  return (...args: any[]) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => {
+      func(...args);
+    }, delay);
+  };
+};
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const debounce2 = (func: (...args: any[]) => void, delay: number) => {
   let timeoutId: NodeJS.Timeout;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return (...args: any[]) => {

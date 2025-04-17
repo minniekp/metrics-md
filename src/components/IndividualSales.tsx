@@ -17,13 +17,13 @@ import { SelectChangeEvent } from '@mui/material/Select';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import TextField from '@mui/material/TextField';
-import { debounce, saveCraftData } from '../utils/api';
+import { debounce2, saveCraftData } from '../utils/api';
 import Typography  from '@mui/material/Typography';
 import { useState, useEffect, useCallback } from 'react';
 import { DataType2, DataType1 } from './types';
 import { fetchData1, fetchData2, fetchData3 } from '../utils/api';
 import EditIcon from '@mui/icons-material/Edit';
-import { toast } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
@@ -36,6 +36,7 @@ const IndividualSales: React.FC = () => {
     const [enterpriseId, setEnterpriseId] = React.useState('');
     const [data, setData] = useState<DataType2[]>([]);
     const [fullData, setFullData] = useState<DataType1[]>([]);
+    const [fullManagedData, setFullManagedData] = useState<DataType1[]>([]);
     const [isCraftEditable, setIsCraftEditable] = useState(false); // State to toggle edit mode
     const [isTargetEditable, setIsTargetEditable] = useState(false);
     const [targetInputValue, setTargetInputValue] = useState(''); // State to store input value
@@ -65,11 +66,10 @@ const IndividualSales: React.FC = () => {
       setTargetInputValue(event.target.value); // Update input value
     };
 
-    const debouncedSaveData = useCallback(
-      debounce(
+    const debouncedSaveCraftData = useCallback(
+      debounce2(
         async (
           enterpriseId: string,
-          chgValue: string,
           originalCraftTarget: string,
           newCraftTarget: string
         ) => {
@@ -123,7 +123,7 @@ const handleCraftInputChange = (index: number, field: keyof DataType1, value: st
   const currentTimestamp = new Date().toLocaleString();
   setLastUpdated(currentTimestamp);
 
-  debouncedSaveData(
+  debouncedSaveCraftData(
     newData[index]['Enterprise ID Name'],
     value,
     previousCraftValue ?? '',
@@ -220,7 +220,7 @@ const getCommentsData = async () => {
         if (cachedData) {
           // Parse and use the cached data
           const parsedData: DataType1[] = JSON.parse(cachedData);
-          setFullData(parsedData);
+          setFullManagedData(parsedData);
           console.log('Using cached data:', parsedData);
         } else {
           // Fetch data from the API if cache is empty
@@ -229,22 +229,23 @@ const getCommentsData = async () => {
   
           // Ensure the result is an array
           if (Array.isArray(result)) {
-            setFullData(result);
-  // Cache the data in sessionStorage
-  sessionStorage.setItem('fetchData1Cache', JSON.stringify(result));
-  sessionStorage.setItem('fetchData1CacheTimestamp', Date.now().toString());
-} else {
-  throw new Error('Data is not an array');
-}
-}
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-} catch (error: Error | any) {
-console.error('Error fetching data:', error);
-}
-};
+            setFullManagedData(result);
+        // Cache the data in sessionStorage
+        sessionStorage.setItem('fetchData1Cache', JSON.stringify(result));
+        sessionStorage.setItem('fetchData1CacheTimestamp', Date.now().toString());
+      } else {
+        throw new Error('Data is not an array');
+      }
+      }
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } catch (error: Error | any) {
+      console.error('Error fetching data:', error);
+      }
+      };
 
-getData();
-}, []);
+      getData();
+      }, []);
+
     const handleConfirmedChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setCheckedConfirmed(event.target.checked);
       };
@@ -253,7 +254,7 @@ getData();
         setCheckedConversation(event.target.checked);
       };
 
-      const handleManagedConfirmedChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+      const handleManagedConfirmedChange: (event: React.ChangeEvent<HTMLInputElement>) => void = (event) => {
         setManagedCheckedConfirmed(event.target.checked);
       };
     
@@ -266,10 +267,11 @@ getData();
       }
 
     
-      const enterpriseData = fullData.length > 0 ? fullData.filter((item) => item['Enterprise ID Name'] === enterpriseId) : [];
+      const enterpriseData = fullManagedData.length > 0 ? fullManagedData.filter((item) => item['Enterprise ID Name'] === enterpriseId) : [];
       console.log('enterprisedata', enterpriseData);
     return (
         <>
+        <ToastContainer />
         {loading && <div className="spinner"></div>}
         <div className='enterprise'>
             <p><strong>Sales Metrics and Targets - FY25:</strong></p>          
@@ -423,8 +425,8 @@ getData();
                 <Table className="sales-styled-table" striped bordered hover size="sm">
           <thead>
             <tr>
-              <th className="shaded-size-th">Current Craft Sales Target $</th>
-              <th className="shaded-size-th">Edited Craft Sales Target $</th>
+              <th className="shaded-size-th">Original Craft Sales Target $</th>
+              <th className="shaded-size-th">New Craft Sales Target $</th>
             </tr>
           </thead>
           <tbody>

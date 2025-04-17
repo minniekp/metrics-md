@@ -11,7 +11,7 @@ import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import TextField from '@mui/material/TextField';
 import { styled } from '@mui/material/styles';
-import { debounce, saveData } from '../utils/api';
+import { debounce1, saveData } from '../utils/api';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import '../app/styles.css'; // Import the CSS file
@@ -85,7 +85,7 @@ getData();
   };
 
   const debouncedSaveData = useCallback(
-    debounce(async (enterpriseId: string, chgValue: string) => {
+    debounce1(async (enterpriseId: string, chgValue: string) => {
       setLoading(true);
       try {
         const updatedData = await saveData(enterpriseId, chgValue, data as unknown as DataType1[]);
