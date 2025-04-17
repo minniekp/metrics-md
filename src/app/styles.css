@@ -187,7 +187,7 @@
   height: 350px;
 }
 
-.manaed-sales-card {
+.managed-sales-card {
   display: flex;
   flex-direction: column; /* Stack cards vertically */
   gap: 50px; 
@@ -205,20 +205,28 @@ width: 1px !important;
 .sales-styled-table th,
 .sales-styled-table td {
   padding: 5px; /* Decrease padding for smaller height */
-  height: 5px !important; /* Set a fixed height for table cells */
+  height: 10px !important; /* Set a fixed height for table cells */
   line-height: 10px !important;
   text-align: left;
 vertical-align: middle;
 }
 
+.sales-styled-table .spaced-td {
+  text-align: right !important;
+}
+
+.shaded-th {
+  padding-left: 20px; /* Add space to the left of <th> */
+}
+
 .sales-metrics{
-  width: 78%;
-margin-left: 160px;
-margin-top: -70px;
+  width: 100%;
+margin-left: 10px;
+margin-top: 10px;
 }
 
 .sales-metrics-dropdown{
-  width: 50%;
+  width: 70%;
   margin-right: 500%;
 }
 
@@ -294,13 +302,12 @@ margin-top: -70px;
 
 .top-right-buttons {
   position: absolute;
-  top: 20px;
-  right: 5px;
+  top: 120px;
+  left: 77%;
   display: flex;
-  flex-direction: column;
-  gap: 10px;
+  flex-direction: row;
   margin-right: 0px;
-  width: 110px;
+  width: 70%;
 }
 
 .card-table-container {
@@ -372,5 +379,85 @@ margin-bottom: 30px;
   vertical-align: middle !important; /* Center-align content vertically */
 }
 
+.comments-section {
+  margin-top: 20px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+}
 
-  
+.comments-section h3 {
+  margin-bottom: 10px;
+  font-size: 16px;
+  color: #333;
+}
+
+.comments-display {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 10px;
+  white-space: pre-wrap; /* Ensure comments wrap properly */
+}
+
+.add-comment {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.comment-input {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.btn-primary {
+  padding: 8px 16px;
+  font-size: 14px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+}
+
+.btn-secondary {
+  padding: 8px 16px;
+  font-size: 14px;
+  background-color: #6c757d;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn-secondary:hover {
+  background-color: #5a6268;
+}
+
+.craft-target-input {
+  width: 80%;
+  text-align: center;
+  background-color: transparent;
+  transition: background-color 0.3s, border 0.3s;
+  height: 20px; /* Increase the height of the input field */
+  line-height: 5px; 
+  margin-top: 10px;
+}
+
+.craft-target-input:disabled {
+  background-color: transparent;
+  border: none;
+}
+
+.craft-target-input:focus {
+  border: 1px solid #007bff;
+  background-color: white;
+}

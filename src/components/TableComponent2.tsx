@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Table } from 'react-bootstrap';
 import { fetchData2 } from '../utils/api'; // Update this import to match your actual fetch function
-import { DataType2 } from './types';
+import {DataType1, DataType2 } from './types';
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
@@ -37,22 +37,7 @@ const TableComponent2: React.FC = () => {
   const [showFY24, setShowFY24] = useState(false);
   const [loading, setLoading] = useState(false);
   const label = { inputProps: { 'aria-label': 'Show FY24 Actuals and Targets' } };
-  useEffect(() => {
-    // Clear sessionStorage cache on page refresh
-    const clearCacheOnRefresh = () => {
-      sessionStorage.removeItem('fetchData2Cache');
-      console.log('Cache cleared on page refresh');
-    };
   
-    // Attach the event listener
-    window.addEventListener('beforeunload', clearCacheOnRefresh);
-  
-    // Cleanup the event listener on component unmount
-    return () => {
-      window.removeEventListener('beforeunload', clearCacheOnRefresh);
-    };
-  }, []);
-
   useEffect(() => {
     const getData = async () => {
       try {
@@ -103,7 +88,7 @@ getData();
     debounce(async (enterpriseId: string, chgValue: string) => {
       setLoading(true);
       try {
-        const updatedData = await saveData(enterpriseId, chgValue);
+        const updatedData = await saveData(enterpriseId, chgValue, data as unknown as DataType1[]);
         if (updatedData) {
           setData(updatedData);
         } else {

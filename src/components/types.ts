@@ -44,6 +44,14 @@ export interface DataType1 {
   'Managed Chargeable FTE% Actuals': string;
   'Managed Chargeability Target': string;
   'Managed Chargeability Actuals': string;
+  'Individual Sales':string;
+  'Individual Sales Target Min':string;
+  'Individual Sales Target Max':string;
+  'Individual Sales Target Recommendation': string;
+  'Craft Sales Guideline($)':string;
+  'Craft Sales Target $'?: string;
+  'Craft Sales Target % of Ind. Sales Target': string;
+  'Conversation and Target Status': string;
 }
 
 // export interface DataType2 {
@@ -118,4 +126,5 @@ export interface DataType2 {
   'CHG Actual': string;
   'CHG Target': string;
   'Conversation_Owner Name': string;
+ 'Comments': string;
 }
