@@ -27,7 +27,7 @@ export const debounce2 = (func: (...args: any[]) => void, delay: number) => {
   };
 };
 
-export const saveData = async (enterpriseId: string, chgValue: string, salesPlan: DataType1[]) => {
+export const saveData = async (enterpriseId: string, chgValue: string) => {
   const xmlPayload = `<?xml version='1.0' encoding='UTF-8'?>
 <call method="importConfigurableModelData" callerName="me">
   <credentials login="anusha.bramhalingiah@accenture_impl.com" password="Adaptive@123" instanceCode="ACCENTURE_WFP5"/>
@@ -37,7 +37,7 @@ export const saveData = async (enterpriseId: string, chgValue: string, salesPlan
   <rowData>
       <header>Enterprise ID|CHG</header>
       <rows>
-          <row>${enterpriseId}|${chgValue}|${salesPlan}</row>
+          <row>${enterpriseId}|${chgValue}</row>
       </rows>
   </rowData>
 </call>`;

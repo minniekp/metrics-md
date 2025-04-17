@@ -116,6 +116,10 @@ const IndividualSales: React.FC = () => {
 
 const handleCraftInputChange = (index: number, field: keyof DataType1, value: string) => {
   const newData = [...fullData];
+
+  console.log('Previous Craft Value:', previousCraftValue);
+console.log('Edited Craft Value:', editedCraftValue);
+
   newData[index][field] = value; // Update the specific field in the array
   setFullData(newData); // Update the `fullData` state with the modified array
   setEditedCraftValue(value); // Update the edited value state
@@ -125,9 +129,9 @@ const handleCraftInputChange = (index: number, field: keyof DataType1, value: st
 
   debouncedSaveCraftData(
     newData[index]['Enterprise ID Name'],
-    value,
     previousCraftValue ?? '',
-    value // New craft target
+    value
+     // New craft target
   );
 };
 
@@ -431,8 +435,10 @@ const getCommentsData = async () => {
           </thead>
           <tbody>
             <tr>
-              <td>{previousCraftValue ?? 'Not available'}</td>
-              <td>{editedCraftValue ?? 'Not edited yet'}</td> 
+            <td>{previousCraftValue ?? 'Not available'}</td>
+            <td>{editedCraftValue ?? 'Not edited yet'}</td> 
+              
+              
             </tr>
           </tbody>
         </Table>
